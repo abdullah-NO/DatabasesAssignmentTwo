@@ -1,8 +1,9 @@
 USE SuperHeroDb;
 
 ALTER TABLE Assistant
-ADD SuperheroId INT NULL,
+ADD SuperHeroId INT NOT NULL
+UNIQUE(SuperHeroId)
 CONSTRAINT FK_Assistant_Superhero
-FOREIGN KEY (SuperheroId)
-REFERENCES Superhero (Id)
-ON DELETE SET NULL;
+FOREIGN KEY (SuperHeroId)
+REFERENCES SuperHero (SuperHeroId)
+ON DELETE CASCADE;

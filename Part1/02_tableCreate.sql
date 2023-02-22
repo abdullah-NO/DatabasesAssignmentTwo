@@ -1,22 +1,22 @@
 USE SuperHeroDb;
 
-CREATE TABLE Superhero (
-  Id INT NOT NULL IDENTITY(1,1),
+CREATE TABLE SuperHero (
+  SuperHeroId INT NOT NULL IDENTITY(1,1),
   Name VARCHAR(255),
   Alias VARCHAR(255),
   Origin VARCHAR(255),
-  PRIMARY KEY (Id)
+  PRIMARY KEY (SuperHeroId)
 );
 
 CREATE TABLE Assistant (
-  Id INT NOT NULL IDENTITY(1,1),
+  AssistantId INT NOT NULL IDENTITY(1,1),
   Name VARCHAR(255),
-  PRIMARY KEY (Id)
+  PRIMARY KEY (AssistantId)
 );
 
 CREATE TABLE Power (
-  Id INT NOT NULL IDENTITY(1,1),
+  PowerId INT NOT NULL IDENTITY(1,1),
   Name VARCHAR(255),
   Description TEXT,
-  PRIMARY KEY (Id)
+  PRIMARY KEY (PowerId)
 );
