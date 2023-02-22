@@ -1,6 +1,6 @@
 USE SuperHeroDb;
 INSERT INTO SuperHero(Alias, Name, Origin)
 VALUES 
-	('Sverre','SuperSverre' , 'The gates of Hell'),
-    ('Abdullah', 'Halludba', 'the gates of kebabbiten'),
-    ('Haavard', 'your brother', 'your mom');
+	('SuperSverre','Sverre' , 'The gates of Hell'),
+    ('Halludba', 'Abdullah', 'the gates of kebabbiten'),
+    ('your brother', 'Haavard', 'your mom'); 
