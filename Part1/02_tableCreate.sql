@@ -13,7 +13,6 @@ CREATE TABLE Assistant (
   Name VARCHAR(255),
   PRIMARY KEY (Id)
 );
-
 CREATE TABLE Power (
   Id INT NOT NULL IDENTITY(1,1),
   Name VARCHAR(255),
