@@ -11,7 +11,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
     {
         public Customer GetCustomer(string id);
         public List<Customer> GetAllCustomers();
-        public bool AddCustomer(Customer customer);
+        public bool AddNewCustomer(Customer customer);
         public bool UpdateCustomer(Customer customer);
         public bool DeleteCustomer(string id);
 
