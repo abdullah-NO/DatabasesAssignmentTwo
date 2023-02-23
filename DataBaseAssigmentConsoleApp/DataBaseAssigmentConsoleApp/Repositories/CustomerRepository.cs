@@ -193,16 +193,14 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             {
                 using SqlConnection conn = new SqlConnection((ConnectionHelper.GetConnectionString()));
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@FirstName", customer.FirstName);
-                    cmd.Parameters.AddWithValue("@LastName", customer.LastName);
-                    cmd.Parameters.AddWithValue("@Country", customer.Country);
-                    cmd.Parameters.AddWithValue("@PostalCode", customer.PostalCode);
-                    cmd.Parameters.AddWithValue("@Phone", customer.Phone);
-                    cmd.Parameters.AddWithValue("@Email", customer.Email);
-                    success = cmd.ExecuteNonQuery() > 0 ? true : false;
-                }
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@FirstName", customer.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", customer.LastName);
+                cmd.Parameters.AddWithValue("@Country", customer.Country);
+                cmd.Parameters.AddWithValue("@PostalCode", customer.PostalCode);
+                cmd.Parameters.AddWithValue("@Phone", customer.Phone);
+                cmd.Parameters.AddWithValue("@Email", customer.Email);
+                success = cmd.ExecuteNonQuery() > 0;
             }
             catch (Exception ex)
             {
@@ -219,7 +217,36 @@ namespace DataBaseAssigmentConsoleApp.Repositories
 
         public bool UpdateCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            bool success = false;
+            using SqlConnection conn = new SqlConnection(ConnectionHelper.GetConnectionString());
+            conn.Open();
+            string sql = "UPDATE Customer SET FirstName = @FirstName, " +
+                " LastName = @LastName, " +
+                " Country = @Country, " +
+                "PostalCode = @PostalCode, " +
+                "Phone = @Phone, " +
+                "Email = @Email WHERE CustomerId = @CustomerId";
+            try
+            {
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@CustomerId", customer.CustomerId);
+                cmd.Parameters.AddWithValue("@FirstName", customer.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", customer.LastName);
+                cmd.Parameters.AddWithValue("@Country", customer.Country);
+                cmd.Parameters.AddWithValue("@PostalCode", customer.PostalCode);
+                cmd.Parameters.AddWithValue("@Phone", customer.Phone);
+                cmd.Parameters.AddWithValue("@Email", customer.Email);
+                success = cmd.ExecuteNonQuery() > 0 ? true: false;
+            }
+            catch (Exception ex)
+            {
+                //Some message indicating customer updated.
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(":( :(");
+                return false;
+            }
+            Console.WriteLine($"Customer updated");
+            return success;
         }
     }
 }
