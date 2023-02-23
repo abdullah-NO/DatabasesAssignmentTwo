@@ -26,11 +26,11 @@ namespace DataBaseAssigmentConsoleApp
         {
             Customer test = new Customer()
             {
-                CustomerId = "Some_string",
+                CustomerId = 12,
                 FirstName = "Some_Shitty_Name",
                 LastName = "HalloTarzan",
                 Country = "North-Korea",
-                PostalCode = "Kim Jong Uns adress",
+                PostalCode = "12345",
                 Phone = "1234567890",
                 Email = "MyEmail"
             };

@@ -18,6 +18,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             connectionStringBuilder.DataSource = connectionStringAbdullah;
             connectionStringBuilder.InitialCatalog = "Chinook";
             connectionStringBuilder.IntegratedSecurity = true;
+            connectionStringBuilder.TrustServerCertificate= true;
             return connectionStringBuilder.ConnectionString;
         }
     }

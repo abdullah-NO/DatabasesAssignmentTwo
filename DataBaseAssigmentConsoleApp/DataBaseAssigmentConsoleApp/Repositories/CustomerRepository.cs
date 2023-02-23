@@ -13,7 +13,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         public List<Customer> GetAllCustomers()
         {
             List<Customer> CustomerList = new List<Customer>();
-            string sql = "SELECT * FROM Customer";//"SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Chinook.dbo.Customer;";
+            string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Chinook.dbo.Customer;";
             try
             {
                 //Connect
@@ -29,12 +29,14 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                             {
                                 //Handle result
                                 Customer temp = new Customer();
-                                temp.CustomerId = reader.GetString(0);
+                                temp.CustomerId = reader.GetInt32(0);
                                 temp.FirstName = reader.GetString(1);
                                 temp.LastName = reader.GetString(2);
                                 temp.Country = reader.GetString(3);
-                                temp.PostalCode = reader.GetString(4);
-                                temp.Phone = reader.GetString(5);
+                                if (!reader.IsDBNull(reader.GetOrdinal("PostalCode")))
+                                 temp.PostalCode = reader.GetString(4); 
+                                if (!reader.IsDBNull(reader.GetOrdinal("Phone")))
+                                    temp.Phone = reader.GetString(5);
                                 temp.Email= reader.GetString(6);
                                 CustomerList.Add(temp);
                             }
