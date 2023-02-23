@@ -8,6 +8,8 @@ namespace DataBaseAssigmentConsoleApp
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
+            ICustomerRepository repository = new CustomerRepository();
+            TestSelectAll(repository);
         }
 
         static void TestSelectAll(ICustomerRepository repository)
@@ -29,7 +31,7 @@ namespace DataBaseAssigmentConsoleApp
                 LastName = "HalloTarzan",
                 Country = "North-Korea",
                 PostalCode = "Kim Jong Uns adress",
-                PhoneNumber = "1234567890",
+                Phone = "1234567890",
                 Email = "MyEmail"
             };
             if (repository.AddNewCustomer(test))
@@ -56,11 +58,8 @@ namespace DataBaseAssigmentConsoleApp
                 $"{customer.LastName} " +
                 $"{customer.Country} " +
                 $"{customer.PostalCode}" +
-                $" {customer.PhoneNumber} " +
+                $" {customer.Phone} " +
                 $"{customer.Email} ---" );
         }
-
-
     }
-
 }

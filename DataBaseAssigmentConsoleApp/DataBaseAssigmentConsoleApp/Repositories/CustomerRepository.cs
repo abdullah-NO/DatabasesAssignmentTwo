@@ -13,7 +13,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         public List<Customer> GetAllCustomers()
         {
             List<Customer> CustomerList = new List<Customer>();
-            string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, PhoneNumber, Email";
+            string sql = "SELECT * FROM Customer";//"SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Chinook.dbo.Customer;";
             try
             {
                 //Connect
@@ -34,28 +34,22 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                                 temp.LastName = reader.GetString(2);
                                 temp.Country = reader.GetString(3);
                                 temp.PostalCode = reader.GetString(4);
-                                temp.PhoneNumber= reader.GetString(5);
+                                temp.Phone = reader.GetString(5);
                                 temp.Email= reader.GetString(6);
                                 CustomerList.Add(temp);
-
                             }
                         }
                     }
-                    // Reader
-
-                    
+                    // Reader   
                 }
-
 
             }
             catch (SqlException ex)
             {
+                Console.WriteLine(ex.Message);
                 //Log the fucking error
             }
-            //Connect
-            //Make a command
-            //Reader
-            //Handle result
+            return CustomerList;
             throw new NotImplementedException();
         }
 
