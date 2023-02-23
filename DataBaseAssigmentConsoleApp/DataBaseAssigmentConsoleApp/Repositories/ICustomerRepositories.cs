@@ -1,11 +1,11 @@
-﻿using DatabasesAssignmentTwoConsoleApp.Models;
+﻿using DataBaseAssigmentConsoleApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabasesAssignmentTwoConsoleApp.Repositories
+namespace DataBaseAssigmentConsoleApp.Repositories
 {
     public interface ICustomerRepository
     {
@@ -18,3 +18,4 @@ namespace DatabasesAssignmentTwoConsoleApp.Repositories
 
     }
 }
+
