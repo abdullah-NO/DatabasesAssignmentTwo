@@ -1,5 +1,7 @@
 ﻿using DataBaseAssigmentConsoleApp.Models;
 using DataBaseAssigmentConsoleApp.Repositories;
+using System.Diagnostics.Metrics;
+using System.Numerics;
 
 namespace DataBaseAssigmentConsoleApp
 {
@@ -9,8 +11,26 @@ namespace DataBaseAssigmentConsoleApp
         {
             Console.WriteLine("Hello, World!");
             ICustomerRepository repository = new CustomerRepository();
-           // TestSelectAll(repository);
             PrintCustomer(repository.GetCustomerByName("Astrid", "Gruber"));
+            PrintCustomer(repository.GetPageOfCustomers(0, 10));
+            Customer TestCustomer = new Customer()
+            {
+                FirstName = "Sverre",
+                LastName = "Hussain",
+                Country = "USA",
+                PostalCode = "123123",
+                Phone = "12423",
+                Email = "SomestupidEmail@gmail.com"
+            };
+ 
+            bool success = repository.AddNewCustomer(TestCustomer);
+            if (success)
+            {
+                Console.WriteLine("nice");
+            }
+
+            TestSelectAll(repository);
+
         }
 
         static void TestSelectAll(ICustomerRepository repository)

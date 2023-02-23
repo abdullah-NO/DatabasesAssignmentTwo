@@ -145,11 +145,73 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             }
             return customer;
         }
+
+        public List<Customer> GetPageOfCustomers(int offset, int limit)
+        {
+            List <Customer> CustomerList = new List<Customer>();
+            string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer ORDER BY CustomerId OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY";
+            try
+            {
+                using SqlConnection conn = new SqlConnection((ConnectionHelper.GetConnectionString()));
+                conn.Open();
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Offset", offset);
+                cmd.Parameters.AddWithValue("@Limit", limit);
+                using SqlDataReader reader = cmd.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    //Handle result
+                    Customer temp = new Customer();
+                    temp.CustomerId = reader.GetInt32(0);
+                    temp.FirstName = reader.GetString(1);
+                    temp.LastName = reader.GetString(2);
+                    temp.Country = reader.GetString(3);
+                    if (!reader.IsDBNull(reader.GetOrdinal("PostalCode")))
+                        temp.PostalCode = reader.GetString(4);
+                    if (!reader.IsDBNull(reader.GetOrdinal("Phone")))
+                        temp.Phone = reader.GetString(5);
+                    temp.Email = reader.GetString(6);
+                    CustomerList.Add(temp);
+                }
+            
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //Log the fucking error
+            }
+
+            return CustomerList;
+        }
         public bool AddNewCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            bool success = false;
+            string sql = "INSERT INTO Customer(FirstName,LastName,Country,PostalCode,Phone,Email) VALUES(@FirstName, @LastName, @Country, @PostalCode, @Phone, @Email)";
+            try
+            {
+                using SqlConnection conn = new SqlConnection((ConnectionHelper.GetConnectionString()));
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@FirstName", customer.FirstName);
+                    cmd.Parameters.AddWithValue("@LastName", customer.LastName);
+                    cmd.Parameters.AddWithValue("@Country", customer.Country);
+                    cmd.Parameters.AddWithValue("@PostalCode", customer.PostalCode);
+                    cmd.Parameters.AddWithValue("@Phone", customer.Phone);
+                    cmd.Parameters.AddWithValue("@Email", customer.Email);
+                    success = cmd.ExecuteNonQuery() > 0 ? true : false;
+                }
+            }
+            catch (Exception ex)
+            {
+                //Some message indicating customer not added.
+                Console.WriteLine(ex.Message);
+            }
+            Console.WriteLine($"Customer with name: {customer.FirstName} {customer.LastName} added");
+            return success;
         }
-
         public bool DeleteCustomer(string id)
         {
             throw new NotImplementedException();
