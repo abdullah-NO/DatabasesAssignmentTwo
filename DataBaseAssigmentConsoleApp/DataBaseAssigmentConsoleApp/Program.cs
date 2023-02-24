@@ -11,23 +11,29 @@ namespace DataBaseAssigmentConsoleApp
         {
             Console.WriteLine("Hello, World!");
             ICustomerRepository repository = new CustomerRepository();
-            PrintCustomer(repository.GetCustomerByName("Astrid", "Gruber"));
-            Customer customer = repository.GetCustomerById(8);
-            Customer UpdatedCustomer = new()
-            {
-                CustomerId = customer.CustomerId,
-                FirstName = "NEW CUSTOMER FIRST NAME",
-                LastName = "NEW GENERIC LAST NAME",
-                Country = "North-Korea",
-                PostalCode = "0880",
-                Phone = "69",
-                Email = "NEW_EMAIL@gmail.com"
-            };
-            repository.UpdateCustomer(UpdatedCustomer);
-            TestSelect(repository);
+            //PrintCustomer(repository.GetCustomerByName("Astrid", "Gruber"));
+            //Customer customer = repository.GetCustomerById(8);
+            //Customer UpdatedCustomer = new()
+            //{
+            //    CustomerId = customer.CustomerId,
+            //    FirstName = "NEW CUSTOMER FIRST NAME",
+            //    LastName = "NEW GENERIC LAST NAME",
+            //    Country = "North-Korea",
+            //    PostalCode = "0880",
+            //    Phone = "69",
+            //    Email = "NEW_EMAIL@gmail.com"
+            //};
+            //repository.UpdateCustomer(UpdatedCustomer);
+            //TestSelect(repository);
+            GetAllCustomerCountires(repository);
+            
 
 
+        }
 
+        static void GetAllCustomerCountires(ICustomerRepository repository)
+        {
+            repository.GetCountriesFromCustomers().ForEach(x => Console.WriteLine(x.ToString()));
         }
 
         static void TestSelectAll(ICustomerRepository repository)

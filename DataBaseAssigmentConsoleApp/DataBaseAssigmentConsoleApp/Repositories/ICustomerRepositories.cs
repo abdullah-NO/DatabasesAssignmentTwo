@@ -16,7 +16,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         public bool AddNewCustomer(Customer customer);
         public bool UpdateCustomer(Customer customer);
         public bool DeleteCustomer(string id);
-
+        public List <CustomerCountries> GetCountriesFromCustomers();
     }
 }
 

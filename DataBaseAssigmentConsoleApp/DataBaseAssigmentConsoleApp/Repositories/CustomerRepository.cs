@@ -248,5 +248,22 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             Console.WriteLine($"Customer updated");
             return success;
         }
+        public List<CustomerCountries> GetCountriesFromCustomers() 
+        {
+            List<CustomerCountries> customerCountries = new();
+            using SqlConnection conn = new SqlConnection(ConnectionHelper.GetConnectionString());
+            conn.Open();
+            string sql = "SELECT Country, COUNT(CustomerId) NumberOfCustomers FROM dbo.Customer GROUP BY Country ORDER BY NumberOfCustomers DESC";
+            SqlCommand command = new SqlCommand(sql, conn);
+            using SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                customerCountries.Add(new CustomerCountries(
+                    reader.GetString(0),
+                    reader.GetInt32(1)
+                    ));
+            }
+            return customerCountries;
+        }
     }
 }

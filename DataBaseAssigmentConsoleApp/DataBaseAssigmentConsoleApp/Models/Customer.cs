@@ -17,6 +17,7 @@ namespace DataBaseAssigmentConsoleApp.Models
 
         public string? Email { get; set; }
 
+
         //internal readonly record struct Customer(int CustomerId, string FirstName, string LastName, string Country, string Phone, string PostalCode, string Email);
 
     }
