@@ -26,7 +26,7 @@ namespace DataBaseAssigmentConsoleApp
 
             //Task 3
 
-            //ReadCustomerByName(repository, "Daan", "Peeters");
+            //ReadCustomerByName(repository, "Dan", "Mill");
 
             //Task 4
 
@@ -51,7 +51,6 @@ namespace DataBaseAssigmentConsoleApp
             //Task 9
 
             //GetFavoriteGenreById(repository, 9);
-
         }
 
         static void GetAllCustomerCountries(ICustomerRepository repository)

@@ -156,7 +156,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 }
                 else
                 {
-                    throw new Exception("Some annoying mistake in database or some shit");
+                    throw new Exception();
                 }
                 // Reader   
             }

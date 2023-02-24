@@ -17,7 +17,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             string connectionStringNICHOLAS = "PUT YOUR OWN HERE :)";
 
             //switch connection string for the DataSource when you use another pc.
-            connectionStringBuilder.DataSource = connectionStringSverre;
+            connectionStringBuilder.DataSource = connectionStringAbdullah;
             connectionStringBuilder.InitialCatalog = "Chinook";
             connectionStringBuilder.IntegratedSecurity = true;
             connectionStringBuilder.TrustServerCertificate= true;
