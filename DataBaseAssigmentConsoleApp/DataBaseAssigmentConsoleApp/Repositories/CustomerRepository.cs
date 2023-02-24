@@ -3,14 +3,25 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataBaseAssigmentConsoleApp.Repositories
 {
+    /// <summary>
+    /// the customerRepository
+    /// </summary>
     public class CustomerRepository : ICustomerRepository
     {
+        /// <summary>
+        /// this function returns all customers from a sql database called "Chinook"
+        /// </summary>
+        /// <returns>
+        /// List<customer>
+        /// </returns>
+
         public List<Customer> GetAllCustomers()
         {
             List<Customer> CustomerList = new List<Customer>();
@@ -42,20 +53,25 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                                 CustomerList.Add(temp);
                             }
                         }
-                    }
-                    // Reader   
+                    }  
                 }
 
             }
+            //log exception message if there is one
             catch (SqlException ex)
             {
                 Console.WriteLine(ex.Message);
-                //Log the fucking error
             }
             return CustomerList;
-            throw new NotImplementedException();
         }
 
+
+        /// <summary>
+        /// this function returns a single customer record by ID 
+        /// </summary>
+        /// <returns>
+        /// customer
+        /// </returns>
         public Customer GetCustomerById(int id)
         {
             string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Chinook.dbo.Customer WHERE CustomerId = @CustomerId;";
@@ -66,12 +82,14 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 //Connect
                 using SqlConnection conn = new SqlConnection((ConnectionHelper.GetConnectionString()));
                 conn.Open();
+                //make a command
                 using SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@CustomerId", id);
                 using SqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
+                    //handle result
                     Customer temp = new Customer();
                     temp.CustomerId = reader.GetInt32(0);
                     temp.FirstName = reader.GetString(1);
@@ -89,19 +107,21 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 {
                     throw new Exception("Some annoying mistake in database or some shit");
                 }
-                // Reader   
-
 
             }
+            //log the error if there is one
             catch (SqlException ex)
             {
                 Console.WriteLine(ex.Message);
-                //Log the fucking error
             }
             return customer;
 
-
-
+            /// <summary>
+            /// this function returns a single customer record by customers name 
+            /// </summary>
+            /// <returns>
+            /// customer
+            /// </returns>
         }
         public Customer GetCustomerByName(string FirstName, string LastName)
         {
@@ -113,6 +133,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 //Connect
                 using SqlConnection conn = new SqlConnection((ConnectionHelper.GetConnectionString()));
                 conn.Open();
+                //make a command
                 using SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@FirstName", FirstName + "%");
                 cmd.Parameters.AddWithValue("@LastName", LastName + "%");
@@ -120,6 +141,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
 
                 if (reader.Read())
                 {
+                    //handle results
                     Customer temp = new Customer();
                     temp.CustomerId = reader.GetInt32(0);
                     temp.FirstName = reader.GetString(1);
@@ -141,11 +163,17 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             catch (SqlException ex)
             {
                 Console.WriteLine(ex.Message);
-                //Log the fucking error
+                //Log the error
             }
             return customer;
         }
 
+        /// <summary>
+        /// this function returns a list of customers from a specified range based on ID
+        /// </summary>
+        /// <returns>
+        /// List<Customer>
+        /// </returns>
         public List<Customer> GetPageOfCustomers(int offset, int limit)
         {
             List<Customer> CustomerList = new List<Customer>();
@@ -185,6 +213,13 @@ namespace DataBaseAssigmentConsoleApp.Repositories
 
             return CustomerList;
         }
+
+        /// <summary>
+        /// this function returns a boolean to true if a new customer is added to the customer table in the database 
+        /// </summary>
+        /// <returns>
+        /// Bool
+        /// </returns>
         public bool AddNewCustomer(Customer customer)
         {
             bool success = false;
@@ -210,11 +245,13 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             Console.WriteLine($"Customer with name: {customer.FirstName} {customer.LastName} added");
             return success;
         }
-        public bool DeleteCustomer(string id)
-        {
-            throw new NotImplementedException();
-        }
 
+        /// <summary>
+        /// this function returns a boolean to true if a customer is successfully updated from the customer table in the database 
+        /// </summary>
+        /// <returns>
+        /// Bool
+        /// </returns>
         public bool UpdateCustomer(Customer customer)
         {
             bool success = false;
@@ -248,6 +285,14 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             Console.WriteLine($"Customer updated");
             return success;
         }
+
+
+        /// <summary>
+        /// Return the number of customers in each country, ordered descending (high to low)
+        /// </summary>
+        /// <returns>
+        /// numbers of customers in each country
+        /// </returns>
         public List<CustomerCountries> GetCountriesFromCustomers()
         {
             List<CustomerCountries> customerCountries = new();
@@ -266,6 +311,13 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             return customerCountries;
         }
 
+        
+        /// <summary>
+        /// returns a list of customers who are the highest spenders (total in invoice table is the largest), ordered descending
+        /// </summary>
+        /// <returns>
+        /// numbers of customers in each country
+        /// </returns>
         public List<CustomerSpending> GetCustomerSpenders()
         {
             List<CustomerSpending> customerSpenders = new List<CustomerSpending>();
@@ -291,6 +343,14 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             }
             return customerSpenders;
         }
+
+        /// <summary>
+        /// For a given customer, their most popular genre is returned in a descending order. Most popular in this context 
+        /// means the genre that corresponds to the most tracks from invoices associated to that customer
+        /// </summary>
+        /// <returns>
+        /// numbers of customers in each country
+        /// </returns> 
     }
 }
 
