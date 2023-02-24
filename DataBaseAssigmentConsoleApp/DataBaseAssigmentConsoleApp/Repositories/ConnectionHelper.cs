@@ -15,7 +15,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             string connectionStringAbdullah = "DESKTOP-36U8NTB\\SQLEXPRESS02";
             string connectionStringSverre = "N-NO-01-01-4564\\SQLEXPRESS";
             //switch connection string for the DataSource when you use another pc.
-            connectionStringBuilder.DataSource = connectionStringSverre;
+            connectionStringBuilder.DataSource = connectionStringAbdullah;
             connectionStringBuilder.InitialCatalog = "Chinook";
             connectionStringBuilder.IntegratedSecurity = true;
             connectionStringBuilder.TrustServerCertificate= true;

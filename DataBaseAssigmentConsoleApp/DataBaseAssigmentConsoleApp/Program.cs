@@ -11,13 +11,15 @@ namespace DataBaseAssigmentConsoleApp
         {
             Console.WriteLine("Hello, World!");
             ICustomerRepository repository = new CustomerRepository();
-            PrintCustomer(repository.GetCustomerByName("Astrid", "Gruber"));
-            Customer customer = repository.GetCustomerById(8);
+            //PrintCustomer(repository.GetCustomerByName("Astrid", "Gruber"));
+            //PrintCustomer(repository.GetPageOfCustomers(1, 15));
+
+            Customer customer = repository.GetCustomerById(9);
             Customer UpdatedCustomer = new()
             {
                 CustomerId = customer.CustomerId,
-                FirstName = "NEW CUSTOMER FIRST NAME",
-                LastName = "NEW GENERIC LAST NAME",
+                FirstName = "Herman",
+                LastName = "Hansen",
                 Country = "North-Korea",
                 PostalCode = "0880",
                 Phone = "69",
@@ -25,9 +27,6 @@ namespace DataBaseAssigmentConsoleApp
             };
             repository.UpdateCustomer(UpdatedCustomer);
             TestSelect(repository);
-
-
-
         }
 
         static void TestSelectAll(ICustomerRepository repository)
@@ -37,7 +36,7 @@ namespace DataBaseAssigmentConsoleApp
 
         static void TestSelect(ICustomerRepository repository)
         {
-            PrintCustomer(repository.GetCustomerById(8));
+            PrintCustomer(repository.GetCustomerById(9));
         }
 
         static void TestInsert(ICustomerRepository repository)

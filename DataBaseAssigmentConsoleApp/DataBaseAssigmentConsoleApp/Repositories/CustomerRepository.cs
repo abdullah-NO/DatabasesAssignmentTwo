@@ -146,7 +146,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             return customer;
         }
 
-        public List<Customer> GetPageOfCustomers(int offset, int limit)
+       public List<Customer> GetPageOfCustomers(int offset, int limit)
         {
             List <Customer> CustomerList = new List<Customer>();
             string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer ORDER BY CustomerId OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY";
@@ -155,7 +155,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 using SqlConnection conn = new SqlConnection((ConnectionHelper.GetConnectionString()));
                 conn.Open();
                 using SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@Offset", offset);
+                cmd.Parameters.AddWithValue("@Offset", offset-1);
                 cmd.Parameters.AddWithValue("@Limit", limit);
                 using SqlDataReader reader = cmd.ExecuteReader();
 
