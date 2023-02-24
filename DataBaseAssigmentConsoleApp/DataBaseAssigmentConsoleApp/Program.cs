@@ -18,7 +18,7 @@ namespace DataBaseAssigmentConsoleApp
             ICustomerRepository repository = new CustomerRepository();
             //Task 1
 
-            //SelectAll(repository);
+            SelectAll(repository);
 
             //Task 2
 
@@ -26,31 +26,31 @@ namespace DataBaseAssigmentConsoleApp
 
             //Task 3
 
-            //ReadCustomerByName(repository, "Dan", "Mill");
+            ReadCustomerByName(repository, "Dan", "Mill");
 
             //Task 4
 
-            //GetPage(repository);
+            GetPage(repository);
 
             //Task 5
 
-            //AddCustomer(repository);
+            AddCustomer(repository);
 
             //Task 6
 
-            //UpdateCustomer(repository);
+            UpdateCustomer(repository);
 
             //Task 7
 
-            //DescendingCountries(repository);
+            DescendingCountries(repository);
 
             //Task 8
 
-            //HighestSpenders(repository);
+            HighestSpenders(repository);
 
             //Task 9
 
-            //GetFavoriteGenreById(repository, 9);
+            GetFavoriteGenreById(repository, 9);
         }
 
         static void GetAllCustomerCountries(ICustomerRepository repository)
