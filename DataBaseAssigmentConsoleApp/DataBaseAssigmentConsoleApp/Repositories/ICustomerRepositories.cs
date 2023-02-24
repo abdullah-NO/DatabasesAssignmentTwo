@@ -17,6 +17,8 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         public bool UpdateCustomer(Customer customer);
         public List <CustomerCountries> GetCountriesFromCustomers();
         public List<CustomerSpending> GetCustomerSpenders();
+
+        public List<CustomerGenre> GetFavoriteGenreCustomer(int id);
     }
 }
 

@@ -183,7 +183,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 using SqlConnection conn = new SqlConnection((ConnectionHelper.GetConnectionString()));
                 conn.Open();
                 using SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@Offset", offset);
+                cmd.Parameters.AddWithValue("@Offset", offset -1);
                 cmd.Parameters.AddWithValue("@Limit", limit);
                 using SqlDataReader reader = cmd.ExecuteReader();
 
@@ -350,7 +350,42 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         /// </summary>
         /// <returns>
         /// numbers of customers in each country
-        /// </returns> 
+        /// </returns>
+        public List<CustomerGenre> GetFavoriteGenreCustomer(int id)
+        {
+            string sql = "SELECT Genre.Name,  COUNT(Genre.GenreId) PopularGenre FROM Invoice " +
+                    "INNER JOIN InvoiceLine on Invoice.InvoiceId = InvoiceLine.InvoiceId " +
+                    "INNER JOIN Track on InvoiceLine.TrackId = Track.TrackId " +
+                    "INNER JOIN Genre on Track.GenreId = Genre.GenreId " +
+                    "WHERE CustomerId = @CustomerId " +
+                    "GROUP BY Genre.Name " +
+                    "ORDER BY PopularGenre DESC";
+            List<CustomerGenre> favoriteGenres = new List<CustomerGenre>();
+            try
+            {
+                using SqlConnection conn = new SqlConnection(ConnectionHelper.GetConnectionString());
+                conn.Open();
+
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@CustomerId", id);
+                using SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    favoriteGenres.Add(new CustomerGenre(
+
+                        reader.GetString(0),
+                        reader.GetInt32(1)
+                    ));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+
+            return favoriteGenres;
+        }
     }
 }
 

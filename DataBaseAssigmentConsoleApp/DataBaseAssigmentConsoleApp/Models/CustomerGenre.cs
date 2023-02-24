@@ -6,6 +6,5 @@ using System.Threading.Tasks;
 
 namespace DataBaseAssigmentConsoleApp.Models
 {
-       public readonly record struct CustomerSpending(int CustomerId, decimal TotalAmountSpent);
-
+    public readonly record struct CustomerGenre(string Name, int PopularGenre);
 }
