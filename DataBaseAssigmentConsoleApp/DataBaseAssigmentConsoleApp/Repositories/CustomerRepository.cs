@@ -18,7 +18,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             try
             {
                 //Connect
-                using(SqlConnection conn = new SqlConnection(ConnectionHelper.GetConnectionString())) 
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.GetConnectionString()))
                 {
                     conn.Open();
                     //Make a command
@@ -35,10 +35,10 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                                 temp.LastName = reader.GetString(2);
                                 temp.Country = reader.GetString(3);
                                 if (!reader.IsDBNull(reader.GetOrdinal("PostalCode")))
-                                 temp.PostalCode = reader.GetString(4); 
+                                    temp.PostalCode = reader.GetString(4);
                                 if (!reader.IsDBNull(reader.GetOrdinal("Phone")))
                                     temp.Phone = reader.GetString(5);
-                                temp.Email= reader.GetString(6);
+                                temp.Email = reader.GetString(6);
                                 CustomerList.Add(temp);
                             }
                         }
@@ -58,10 +58,10 @@ namespace DataBaseAssigmentConsoleApp.Repositories
 
         public Customer GetCustomerById(int id)
         {
-           string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Chinook.dbo.Customer WHERE CustomerId = @CustomerId;";
-           Customer customer = new Customer();
+            string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Chinook.dbo.Customer WHERE CustomerId = @CustomerId;";
+            Customer customer = new Customer();
 
-           try
+            try
             {
                 //Connect
                 using SqlConnection conn = new SqlConnection((ConnectionHelper.GetConnectionString()));
@@ -69,7 +69,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 using SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@CustomerId", id);
                 using SqlDataReader reader = cmd.ExecuteReader();
-                    
+
                 if (reader.Read())
                 {
                     Customer temp = new Customer();
@@ -89,8 +89,8 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 {
                     throw new Exception("Some annoying mistake in database or some shit");
                 }
-                    // Reader   
-                
+                // Reader   
+
 
             }
             catch (SqlException ex)
@@ -148,7 +148,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
 
         public List<Customer> GetPageOfCustomers(int offset, int limit)
         {
-            List <Customer> CustomerList = new List<Customer>();
+            List<Customer> CustomerList = new List<Customer>();
             string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer ORDER BY CustomerId OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY";
             try
             {
@@ -175,7 +175,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                     temp.Email = reader.GetString(6);
                     CustomerList.Add(temp);
                 }
-            
+
             }
             catch (Exception ex)
             {
@@ -236,7 +236,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 cmd.Parameters.AddWithValue("@PostalCode", customer.PostalCode);
                 cmd.Parameters.AddWithValue("@Phone", customer.Phone);
                 cmd.Parameters.AddWithValue("@Email", customer.Email);
-                success = cmd.ExecuteNonQuery() > 0 ? true: false;
+                success = cmd.ExecuteNonQuery() > 0 ? true : false;
             }
             catch (Exception ex)
             {
@@ -248,7 +248,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             Console.WriteLine($"Customer updated");
             return success;
         }
-        public List<CustomerCountries> GetCountriesFromCustomers() 
+        public List<CustomerCountries> GetCountriesFromCustomers()
         {
             List<CustomerCountries> customerCountries = new();
             using SqlConnection conn = new SqlConnection(ConnectionHelper.GetConnectionString());
@@ -265,5 +265,32 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             }
             return customerCountries;
         }
+
+        public List<CustomerSpending> GetCustomerSpenders()
+        {
+            List<CustomerSpending> customerSpenders = new List<CustomerSpending>();
+            string sql = "SELECT CustomerId, SUM(Total) TotalAmount FROM Invoice GROUP BY CustomerId ORDER BY TotalAmount DESC";
+            try
+            {
+                using SqlConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString());
+                connection.Open();
+                SqlCommand command = new SqlCommand(sql, connection);
+                using SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+
+                    customerSpenders.Add(new CustomerSpending(
+                        reader.GetInt32(0),
+                        reader.GetDecimal(1)
+                        ));
+                }
+            }
+            catch (Exception ex)
+            {
+                //log ex
+            }
+            return customerSpenders;
+        }
     }
 }
+

@@ -17,6 +17,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         public bool UpdateCustomer(Customer customer);
         public bool DeleteCustomer(string id);
         public List <CustomerCountries> GetCountriesFromCustomers();
+        public List<CustomerSpending> GetCustomerSpenders();
     }
 }
 

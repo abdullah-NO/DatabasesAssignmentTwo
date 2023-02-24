@@ -25,7 +25,8 @@ namespace DataBaseAssigmentConsoleApp
             //};
             //repository.UpdateCustomer(UpdatedCustomer);
             //TestSelect(repository);
-            GetAllCustomerCountires(repository);
+            //GetAllCustomerCountires(repository);
+            DisplayCustomerSpending(repository);
             
 
 
@@ -73,6 +74,11 @@ namespace DataBaseAssigmentConsoleApp
             {
                 PrintCustomer(customer);
             }
+        }
+
+        static void DisplayCustomerSpending(ICustomerRepository repository)
+        {
+            repository.GetCustomerSpenders().ForEach(x => Console.WriteLine(x.ToString()));
         }
 
         static void PrintCustomer(Customer customer)
