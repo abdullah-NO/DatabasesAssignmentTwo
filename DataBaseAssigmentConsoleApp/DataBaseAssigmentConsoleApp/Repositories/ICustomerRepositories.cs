@@ -18,6 +18,8 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         public bool DeleteCustomer(string id);
         public List <CustomerCountries> GetCountriesFromCustomers();
         public List<CustomerSpending> GetCustomerSpenders();
+
+        public List<CustomerGenre> GetFavoriteGenreCustomer(int id);
     }
 }
 

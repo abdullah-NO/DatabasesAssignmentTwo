@@ -14,8 +14,10 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder();
             string connectionStringAbdullah = "DESKTOP-36U8NTB\\SQLEXPRESS02";
             string connectionStringSverre = "N-NO-01-01-4564\\SQLEXPRESS";
+            string connectionStringNICHOLAS = "PUT YOUR OWN HERE :)";
+
             //switch connection string for the DataSource when you use another pc.
-            connectionStringBuilder.DataSource = connectionStringAbdullah;
+            connectionStringBuilder.DataSource = connectionStringSverre;
             connectionStringBuilder.InitialCatalog = "Chinook";
             connectionStringBuilder.IntegratedSecurity = true;
             connectionStringBuilder.TrustServerCertificate= true;
