@@ -15,8 +15,10 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         public List <Customer> GetPageOfCustomers(int offset, int limit);
         public bool AddNewCustomer(Customer customer);
         public bool UpdateCustomer(Customer customer);
-        public bool DeleteCustomer(string id);
+        public List <CustomerCountries> GetCountriesFromCustomers();
+        public List<CustomerSpending> GetCustomerSpenders();
 
+        public List<CustomerGenre> GetFavoriteGenreCustomer(int id);
     }
 }
 
