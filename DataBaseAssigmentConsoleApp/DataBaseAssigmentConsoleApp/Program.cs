@@ -18,7 +18,7 @@ namespace DataBaseAssigmentConsoleApp
             ICustomerRepository repository = new CustomerRepository();
             //Task 1
 
-            SelectAll(repository);
+            //SelectAll(repository);
 
             //Task 2
 
@@ -26,76 +26,76 @@ namespace DataBaseAssigmentConsoleApp
 
             //Task 3
 
-            ReadCustomerByName(repository, "Dan", "Mill");
+            //ReadCustomerByName(repository, "Dan", "Mill");
 
             //Task 4
 
-            GetPage(repository);
+            //GetPage(repository);
 
             //Task 5
 
-            AddCustomer(repository);
+            //AddCustomer(repository);
 
             //Task 6
 
-            UpdateCustomer(repository);
+            //UpdateCustomer(repository);
 
             //Task 7
 
-            DescendingCountries(repository);
+            //DescendingCountries(repository);
 
             //Task 8
 
-            HighestSpenders(repository);
+            //HighestSpenders(repository);
 
             //Task 9
 
-            GetFavoriteGenreById(repository, 9);
+            //GetFavoriteGenreById(repository, 9);
         }
 
-        static void GetAllCustomerCountries(ICustomerRepository repository)
-        {
-            repository.GetCountriesFromCustomers().ForEach(x => Console.WriteLine(x.ToString()));
-        }
-
+       /// <summary>
+       /// this functions displays all customers from the database
+       /// </summary>
+       /// <param name="repository"></param>
         static void SelectAll(ICustomerRepository repository)
         {
             PrintCustomer(repository.GetAllCustomers());
         }
 
+        /// <summary>
+        /// this function displays a single customer that is selected by id
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="id"></param>
         static void Select(ICustomerRepository repository, int id)
         {
             PrintCustomer(repository.GetCustomerById(id));
         }
-        static void GetPage(ICustomerRepository repository) 
+
+        /// <summary>
+        /// this function displays a list a selected range of customers based on the customer id
+        /// </summary>
+        /// <param name="repository"></param>
+        static void GetPage(ICustomerRepository repository)
         {
             PrintCustomer(repository.GetPageOfCustomers(1, 10));
-        } 
+        }
+
+        /// <summary>
+        /// this function displays a single customer that is selected by name
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="FirstName"></param>
+        /// <param name="LastName"></param>
         static void ReadCustomerByName(ICustomerRepository repository, string FirstName, string LastName)
         {
             PrintCustomer(repository.GetCustomerByName(FirstName, LastName));
         }
-        static void TestInsert(ICustomerRepository repository)
-        {
-            Customer test = new Customer()
-            {
-                CustomerId = 12,
-                FirstName = "Some_Shitty_Name",
-                LastName = "HalloTarzan",
-                Country = "North-Korea",
-                PostalCode = "12345",
-                Phone = "1234567890",
-                Email = "MyEmail"
-            };
-            if (repository.AddNewCustomer(test))
-            {
-                Console.WriteLine("Suuu");
-            }
-            else
-            {
-                Console.WriteLine("fuck");
-            }
-        }
+        
+        /// <summary>
+        /// this function adds a customer to the customer table in the database
+        /// </summary>
+        /// <param name="repository"></param>
         static void AddCustomer(ICustomerRepository repository)
         {
             Customer newCustomer = new()
@@ -111,7 +111,10 @@ namespace DataBaseAssigmentConsoleApp
             PrintCustomer(repository.GetCustomerByName(newCustomer.FirstName, newCustomer.LastName));
 
         }
-
+        /// <summary>
+        /// this function updates an existing single customer   
+        /// </summary>
+        /// <param name="repository"></param>
         static void UpdateCustomer(ICustomerRepository repository)
         {
             Customer updatedCustomer = new()
@@ -129,10 +132,10 @@ namespace DataBaseAssigmentConsoleApp
 
         }
 
-        static void GetCountries(ICustomerRepository repository)
-        {
-
-        }
+        /// <summary>
+        /// prints a list of customers
+        /// </summary>
+        /// <param name="customers"></param>
         static void PrintCustomer(IEnumerable<Customer> customers)
         {
             foreach (Customer customer in customers)
@@ -141,10 +144,11 @@ namespace DataBaseAssigmentConsoleApp
             }
         }
 
-        static void DisplayCustomerSpending(ICustomerRepository repository)
-        {
-            repository.GetCustomerSpenders().ForEach(x => Console.WriteLine(x.ToString()));
-        }
+
+        /// <summary>
+        /// this function prints 
+        /// </summary>
+        /// <param name="repository"></param>
         static void DescendingCountries(ICustomerRepository repository)
         {
             repository.GetCountriesFromCustomers().ForEach(x => Console.WriteLine(x.ToString()));

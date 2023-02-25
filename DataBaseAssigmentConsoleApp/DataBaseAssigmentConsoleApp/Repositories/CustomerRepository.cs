@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 namespace DataBaseAssigmentConsoleApp.Repositories
 {
     /// <summary>
-    /// the customerRepository
+    /// the customerRepository contains implementation of all sql queries
     /// </summary>
     public class CustomerRepository : ICustomerRepository
     {
         /// <summary>
-        /// this function returns all customers from a sql database called "Chinook"
+        /// this function returns all customers from a sql database
         /// </summary>
         /// <returns>
         /// List<customer>
         /// </returns>
-
+        /// <exception cref="SqlException">returns an sql exception message</exception>
         public List<Customer> GetAllCustomers()
         {
             List<Customer> CustomerList = new List<Customer>();
@@ -65,13 +65,13 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             return CustomerList;
         }
 
-
         /// <summary>
         /// this function returns a single customer record by ID 
         /// </summary>
         /// <returns>
-        /// customer
-        /// </returns>
+        /// customer instance
+        /// </returns>        
+        /// <exception cref="SqlException">returns an sql exception message</exception>
         public Customer GetCustomerById(int id)
         {
             string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Chinook.dbo.Customer WHERE CustomerId = @CustomerId;";
@@ -122,6 +122,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             /// <returns>
             /// customer
             /// </returns>
+            /// <exception cref="SqlException">returns an sql exception message</exception>
         }
         public Customer GetCustomerByName(string FirstName, string LastName)
         {
@@ -174,6 +175,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         /// <returns>
         /// List<Customer>
         /// </returns>
+        /// <exception cref="SqlException">returns an sql exception message</exception>
         public List<Customer> GetPageOfCustomers(int offset, int limit)
         {
             List<Customer> CustomerList = new List<Customer>();
@@ -205,10 +207,10 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 }
 
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
                 Console.WriteLine(ex.Message);
-                //Log the fucking error
+                //Log the error
             }
 
             return CustomerList;
@@ -220,6 +222,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         /// <returns>
         /// Bool
         /// </returns>
+        /// <exception cref="SqlException">returns an sql exception message</exception>
         public bool AddNewCustomer(Customer customer)
         {
             bool success = false;
@@ -237,7 +240,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 cmd.Parameters.AddWithValue("@Email", customer.Email);
                 success = cmd.ExecuteNonQuery() > 0;
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
                 //Some message indicating customer not added.
                 Console.WriteLine(ex.Message);
@@ -252,6 +255,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         /// <returns>
         /// Bool
         /// </returns>
+        /// <exception cref="SqlException">returns an sql exception message</exception>
         public bool UpdateCustomer(Customer customer)
         {
             bool success = false;
@@ -275,7 +279,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 cmd.Parameters.AddWithValue("@Email", customer.Email);
                 success = cmd.ExecuteNonQuery() > 0 ? true : false;
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
                 //Some message indicating customer updated.
                 Console.WriteLine(ex.Message);
@@ -293,35 +297,43 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         /// <returns>
         /// numbers of customers in each country
         /// </returns>
+        /// <exception cref="SqlException">returns an sql exception message</exception>
         public List<CustomerCountries> GetCountriesFromCustomers()
         {
             List<CustomerCountries> customerCountries = new();
             using SqlConnection conn = new SqlConnection(ConnectionHelper.GetConnectionString());
             conn.Open();
             string sql = "SELECT Country, COUNT(CustomerId) NumberOfCustomers FROM dbo.Customer GROUP BY Country ORDER BY NumberOfCustomers DESC";
-            SqlCommand command = new SqlCommand(sql, conn);
-            using SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                customerCountries.Add(new CustomerCountries(
-                    reader.GetString(0),
-                    reader.GetInt32(1)
-                    ));
+                SqlCommand command = new SqlCommand(sql, conn);
+                using SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    customerCountries.Add(new CustomerCountries(
+                        reader.GetString(0),
+                        reader.GetInt32(1)
+                        ));
+                }
+            }
+            catch(SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
             return customerCountries;
         }
 
-        
         /// <summary>
         /// returns a list of customers who are the highest spenders (total in invoice table is the largest), ordered descending
         /// </summary>
         /// <returns>
         /// numbers of customers in each country
         /// </returns>
+        /// <exception cref="SqlException">returns an sql exception message</exception>
         public List<CustomerSpending> GetCustomerSpenders()
         {
             List<CustomerSpending> customerSpenders = new List<CustomerSpending>();
-            string sql = "SELECT CustomerId, SUM(Total) TotalAmount FROM Invoice GROUP BY CustomerId ORDER BY TotalAmount DESC";
+            string sql = "SELECT CustomerId, SUM(Total) TotalAmountSpent FROM Invoice GROUP BY CustomerId ORDER BY TotalAmountSpent DESC";
             try
             {
                 using SqlConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString());
@@ -330,15 +342,15 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-
-                    customerSpenders.Add(new CustomerSpending(
+                        customerSpenders.Add(new CustomerSpending(
                         reader.GetInt32(0),
                         reader.GetDecimal(1)
                         ));
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
+                Console.WriteLine(ex.Message);
                 //log ex
             }
             return customerSpenders;
@@ -351,6 +363,7 @@ namespace DataBaseAssigmentConsoleApp.Repositories
         /// <returns>
         /// numbers of customers in each country
         /// </returns>
+        /// <exception cref="Exception">returns an sql exception message</exception>
         public List<CustomerGenre> GetFavoriteGenreCustomer(int id)
         {
             string sql = "SELECT Genre.Name,  COUNT(Genre.GenreId) PopularGenre FROM Invoice " +
@@ -378,12 +391,10 @@ namespace DataBaseAssigmentConsoleApp.Repositories
                     ));
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
                 Console.WriteLine(ex.Message);
             }
-
-
             return favoriteGenres;
         }
     }

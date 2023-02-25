@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataBaseAssigmentConsoleApp.Repositories
 {
+    /// <summary>
+    /// this is used to connect to the sql database
+    /// </summary>
     public class ConnectionHelper
     {
         public static string GetConnectionString()
@@ -14,6 +17,8 @@ namespace DataBaseAssigmentConsoleApp.Repositories
             SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder();
             string connectionStringAbdullah = "DESKTOP-36U8NTB\\SQLEXPRESS02";
             string connectionStringSverre = "N-NO-01-01-4564\\SQLEXPRESS";
+
+            //insert your own connection string
             string connectionStringNICHOLAS = "PUT YOUR OWN HERE :)";
 
             //switch connection string for the DataSource when you use another pc.
