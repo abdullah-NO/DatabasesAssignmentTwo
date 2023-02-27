@@ -1,20 +1,20 @@
 # DatabaseAssignment2
-This assignment consists of two sub projects. the first is a series of queries that creates and populates, and manipulates a database. The second project is a c# .net console application that also does a series of database manipulation of a given database.
+This assignment consists of two sub projects. The first is a series of queries that creates and populates, and manipulates a database. The second project is a C# .net console application that also does a series of database manipulation of a given database.
 
-## prerequisites
+## Prerequisites
 You need the following:
 ssms: https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017
 sql express: https://www.microsoft.com/en-us/sql-server/sql-server-downloads
 sql.client from nuget package manager: https://www.nuget.org/packages/Microsoft.Data.SqlClient
 
-## how to use first project
+## How to use first project
 run the sql scripts sequencially through the SSMS from 01-09
 
-## how to use the second project
+## How to use the second project
 setup your own connection string to match your computer and express service
 uncomment the function that you want to use.
 
-these are the functions that the application provides:
+These are the functions that the application provides:
             //Task 1 , displays all customers
             SelectAll(repository);
             //Task 2 , displays a customer sorted by Id number
