@@ -14,7 +14,7 @@ run the sql scripts sequencially through the SSMS from 01-09
 setup your own connection string to match your computer and express service
 uncomment the function that you want to use.
 
-These are the functions that the application provides:
+These are the functions that the application provides:\
             //Task 1 , displays all customers
             SelectAll(repository);\
             //Task 2 , displays a customer sorted by Id number
