@@ -16,22 +16,22 @@ uncomment the function that you want to use.
 
 These are the functions that the application provides:
             //Task 1 , displays all customers
-            SelectAll(repository);
+            SelectAll(repository);\
             //Task 2 , displays a customer sorted by Id number
-            Select(repository, 8);
+            Select(repository, 8);\
             //Task 3 , displays a customer sorted by name
-            ReadCustomerByName(repository, "Dan", "Mill");
+            ReadCustomerByName(repository, "Dan", "Mill");\
             //Task 4 , displays a range of customers sorted by Id, for instance : from Id 3 to Id 10
-            GetPage(repository);
+            GetPage(repository);\
             //Task 5 , adds a new customer to database
-            AddCustomer(repository);
+            AddCustomer(repository);\
             //Task 6, updates an excisting customer
-            UpdateCustomer(repository);
+            UpdateCustomer(repository);\
             //Task 7, shows numbers of customers in different countries and is sorted in a descending order
-            DescendingCountries(repository);
+            DescendingCountries(repository);\
             //Task 8, shows highest customer spenders in a descending order 
-            HighestSpenders(repository);
+            HighestSpenders(repository);\
             //Task 9 shows a genrefavorite based on track record list, invoice and 
-            GetFavoriteGenreById(repository, 9);
+            GetFavoriteGenreById(repository, 9);\
 ## Authors
 The authors of this project are Sverre (Sverdet) Vinje and Abdullah (Abu) Hussain
